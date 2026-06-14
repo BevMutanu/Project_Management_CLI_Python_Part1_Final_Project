@@ -1,0 +1,7 @@
+# Terminal formatting
+
+rich>=13.0.0,<15.0.0
+
+# Unit testing
+
+pytest>=8.0.0,<9.0.0
