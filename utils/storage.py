@@ -44,7 +44,9 @@ def save_users(users):
             for user in users
         ]
     }
-
-    with open(DATABASE_PATH, "w", encoding="utf-8") as file:
-        json.dump(data, file, indent=4)
+    try:
+        with open(DATABASE_PATH, "w", encoding="utf-8") as file:
+            json.dump(data, file, indent=4)
+    except OSError as exc:
+        raise RuntimeError(f"Failed to save database: {exc}") from exc
 

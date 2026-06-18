@@ -1,5 +1,19 @@
+import pytest
 from models.project import Project
 from models.task import Task
+
+
+def test_duplicate_tasks_raise():
+    project = Project(
+        "Website",
+        "Build site",
+        "2026-12-31",
+    )
+
+    project.add_task(Task("Deploy", "Alice"))
+
+    with pytest.raises(ValueError):
+        project.add_task(Task("Deploy", "Bob"))
 
 
 def test_create_project():

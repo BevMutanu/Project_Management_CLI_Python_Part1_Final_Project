@@ -51,19 +51,18 @@ def add_project(args):
         print(f"User '{args.user}' not found.")
         return
 
-    # Prevent duplicate project titles for the same user
-    for project in owner.projects:
-        if project.title.lower() == args.title.lower():
-            print("A project with that title already exists for this user.")
-            return
-
     project = Project(
         title=args.title,
         description=args.description,
         due_date=args.due,
     )
 
-    owner.add_project(project)
+    try:
+        owner.add_project(project)
+    except ValueError as exc:
+        print(exc)
+        return
+
     save_users(users)
 
     print(
@@ -77,21 +76,19 @@ def add_task(args):
     """
     for user in users:
         for project in user.projects:
-
             if project.title.lower() == args.project.lower():
-
-                # Prevent duplicate task titles
-                for existing in project.tasks:
-                    if existing.title.lower() == args.title.lower():
-                        print("Task already exists in this project.")
-                        return
 
                 task = Task(
                     title=args.title,
                     assigned_to=args.assigned,
                 )
 
-                project.add_task(task)
+                try:
+                    project.add_task(task)
+                except ValueError as exc:
+                    print(exc)
+                    return
+
                 save_users(users)
 
                 print(

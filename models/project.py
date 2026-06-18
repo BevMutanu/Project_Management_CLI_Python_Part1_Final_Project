@@ -17,6 +17,11 @@ class Project:
     def __init__(self, title, description, due_date):
         self.id = Project.id_counter
         Project.id_counter += 1
+        if not title.strip():
+            raise ValueError("Project title cannot be empty.")
+
+        if not due_date.strip():
+            raise ValueError("Due date cannot be empty.")
 
         self.title = title
         self.description = description
@@ -24,9 +29,12 @@ class Project:
         self.tasks = []
 
     def add_task(self, task):
-        """
-        Add a Task object to this project.
-        """
+        for existing in self.tasks:
+            if existing.title.lower() == task.title.lower():
+                raise ValueError(
+                    f"Task '{task.title}' already exists."
+                )
+
         self.tasks.append(task)
 
     def to_dict(self):

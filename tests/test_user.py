@@ -1,5 +1,30 @@
+import pytest
 from models.user import User
 from models.project import Project
+
+
+def test_duplicate_projects_raise():
+    user = User(
+        "Alice",
+        "alice@example.com",
+    )
+
+    project = Project(
+        "Website",
+        "",
+        "2026-12-31",
+    )
+
+    user.add_project(project)
+
+    with pytest.raises(ValueError):
+        user.add_project(
+            Project(
+                "Website",
+                "",
+                "2027-01-01",
+            )
+        )
 
 
 def test_create_user():

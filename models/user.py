@@ -24,9 +24,12 @@ class User(Person):
         self.projects = []
 
     def add_project(self, project):
-        """
-        Associate a Project object with this user.
-        """
+        for existing in self.projects:
+            if existing.title.lower() == project.title.lower():
+                raise ValueError(
+                    f"Project '{project.title}' already exists."
+                )
+
         self.projects.append(project)
 
     def to_dict(self):

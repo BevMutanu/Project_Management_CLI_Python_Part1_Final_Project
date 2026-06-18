@@ -13,6 +13,12 @@ class Task:
     id_counter = 1
 
     def __init__(self, title, assigned_to):
+        if not title.strip():
+            raise ValueError("Task title cannot be empty.")
+
+        if not assigned_to.strip():
+            raise ValueError("Assigned user cannot be empty.")
+
         self.id = Task.id_counter
         Task.id_counter += 1
 
